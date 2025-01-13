@@ -6,6 +6,7 @@ import http from "http";
 
 import connectDb from "../db/connectDb.js";
 import {
+    getAllSensorData,
   getLatestSensorData,
   insertSensorData,
 } from "./controllers/sensorController.js";
@@ -26,7 +27,10 @@ app.use(
 );
 app.use(express.json());
 
+app.get("/", (req,res) => res.json("hello"))
 app.get("/api/sensor-values/create", insertSensorData);
+app.get("/api/sensor-values/", (req, res) =>  getLatestSensorData(req, res, io));
+app.get("/api/all-sensor-values/", (req, res) =>  getAllSensorData(req, res, io));
 
 io.on("connection", (socket) => {
   console.log("New client connected");

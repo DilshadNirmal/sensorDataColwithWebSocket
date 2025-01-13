@@ -84,3 +84,22 @@ export const getLatestSensorData = async (req, res, io) => {
         res.status(500).json({ message: "Failed to retrieve latest sensor data" });
     }
 }
+
+export const getAllSensorData = async (req, res, io) => {
+    try {
+        const allCollection1 = await SensorModel1.find()
+        const allCollection2 = await SensorModel2.find()
+        const allCollection3 = await SensorModel3.find()
+
+        const allData = {
+            collection1: allCollection1,
+            collection2: allCollection2,
+            collection3: allCollection3
+        }
+
+        res.json(allData)
+    } catch (err) {
+        console.error("[error retrieving datas]\n" + err)
+        res.status(500).json({ message: "Failed to retrieve all sensor data" });
+    }
+}
